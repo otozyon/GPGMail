@@ -43,9 +43,6 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 
 @interface GPGMailPreferences ()
 
-@property (nonatomic, weak) IBOutlet NSTextField *registrationDescriptionTextField;
-@property (nonatomic, weak) IBOutlet NSTextField *activationCodeTextField;
-@property (nonatomic, weak) IBOutlet NSButton *activateButton;
 @property (nonatomic, weak) IBOutlet NSButton *learnMoreButton;
 @property (nonatomic, weak) IBOutlet NSButton *reportProblemButton;
 @property (nonatomic, assign) BOOL preferencesDidLoad;
@@ -103,46 +100,9 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	return [[NSAttributedString alloc] initWithString:string attributes:attributes];
 }
 
-- (void)updateSupportPlanSection:(NSNotification *)notification {
-    // Check if the outlets are set, otherwise it means that
-    // the preferences are not currently being presented and so
-    // there's no need to change the state.
-    if(_activationCodeTextField != nil) {
-        [self setState:GPGMailPreferencesSupportPlanStateActiveState];
-    }
-}
-
-- (NSString *)registrationCode {
-	if([[GPGMailBundle sharedInstance] hasActiveContract]) {
-		NSDictionary *contractInformation = [[GPGMailBundle  sharedInstance] contractInformation];
-		return [NSString stringWithFormat:@"Code: %@", contractInformation[@"ActivationCode"]];
-	}
-	return @"";
-}
-- (NSString *)registrationDescription {
-    if([[GPGMailBundle sharedInstance] hasActiveContract]) {
-        NSDictionary *contractInformation = [[GPGMailBundle  sharedInstance] contractInformation];
-        return [NSString stringWithFormat:@"Registered to: %@", contractInformation[@"ActivationEmail"]];
-    }
-    NSNumber *remainingDays = [[self bundle] remainingTrialDays];
-    return [NSString stringWithFormat:@"Trial Version%@", [remainingDays integerValue] <= 0 ? @" Expired" : [NSString stringWithFormat:@" (%@ days remaining)", remainingDays]];
-}
-
-- (IBAction)activateSupportPlan:(NSButton *)sender {
-	[[GPGMailBundle sharedInstance] startSupportContractWizard];
-}
-- (IBAction)learnMore:(NSButton *)sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.org/buy-support-plan"]];
-}
-
-
-
-
 - (NSImage *)imageForPreferenceNamed:(NSString *)aName {
 	return [NSImage imageNamed:@"GPGMail"];
 }
-
-
 
 - (IBAction)openSupport:(id)sender {
 	BOOL success = [GPGTask showGPGSuitePreferencesTab:@"report" arguments:nil];
@@ -160,33 +120,8 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 }
 
 
-
 - (IBAction)openGPGStatusHelp:(id)sender {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/kb/how-to/gpg-status"]];
-}
-
-
-- (void)willBeDisplayed {
-    if([[GPGMailBundle sharedInstance] hasActiveContract]) {
-        [self setState:GPGMailPreferencesSupportPlanStateActiveState];
-    }
-    else {
-        [self setState:GPGMailPreferencesSupportPlanStateTrialState];
-    }
-}
-
-- (void)setState:(GPGMailPreferencesSupportPlanState)state {
-    if (_state != state) {
-        _state = state;
-        
-        _activationCodeTextField.hidden = (state == GPGMailPreferencesSupportPlanStateTrialState);
-        _reportProblemButton.hidden = (state == GPGMailPreferencesSupportPlanStateTrialState);
-        _activateButton.hidden = (state == GPGMailPreferencesSupportPlanStateActiveState);
-        _learnMoreButton.hidden = (state == GPGMailPreferencesSupportPlanStateActiveState);
-        _activationCodeTextField.stringValue = [self registrationCode];
-        _registrationDescriptionTextField.hidden = NO;
-        _registrationDescriptionTextField.stringValue = [self registrationDescription];
-    }
 }
 
 - (NSImage *)gpgStatusImage {

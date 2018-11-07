@@ -30,7 +30,6 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <Libmacgpg/Libmacgpg.h>
-#import "GMSupportPlanAssistantWindowController.h"
 
 #if !__has_feature(nullability)
 #define nullable
@@ -44,7 +43,7 @@ extern NSString *gpgErrorIdentifier; // This identifier is used to set and find 
 
 @class Message, GMMessageRulesApplier, GMKeyManager;
 
-@interface GPGMailBundle : NSObject <NSToolbarDelegate, GMSupportPlanAssistantDelegate> {
+@interface GPGMailBundle : NSObject <NSToolbarDelegate> {
     GMMessageRulesApplier *_messageRulesApplier;
     
     NSMutableArray *_bundleImages;
@@ -178,16 +177,6 @@ extern NSString *gpgErrorIdentifier; // This identifier is used to set and find 
 + (NSError *)errorWithCode:(NSInteger)code userInfo:(nullable NSDictionary *)userInfo;
 
 + (NSString *)preferencesPanelName;
-
-/**
- * Support contract methods
- */
-- (void)checkSupportContractAndStartWizardIfNecessary;
-- (void)startSupportContractWizard;
-- (BOOL)hasActiveContract;
-- (BOOL)hasActiveContractOrActiveTrial;
-- (NSNumber *)remainingTrialDays;
-- (NSDictionary *)fetchContractInformation;
 
 @property (readonly) GPGErrorCode gpgStatus;
 @property (readonly, strong) NSSet *allGPGKeys;

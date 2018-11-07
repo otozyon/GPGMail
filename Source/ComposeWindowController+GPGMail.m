@@ -54,9 +54,6 @@ extern const NSString *kFullScreenWindowControllerCloseModalWindowNotYet;
 #pragma mark Security Indicator in Toolbar
 
 - (id)MAToolbarDefaultItemIdentifiers:(id)toolbar {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return [self MAToolbarDefaultItemIdentifiers:toolbar];
-    }
 	id defaultItemIdentifiers = [self MAToolbarDefaultItemIdentifiers:toolbar];
 	
 	// Appending the security method identifier to toggle between OpenPGP and S/MIME.
@@ -67,9 +64,6 @@ extern const NSString *kFullScreenWindowControllerCloseModalWindowNotYet;
 }
 
 - (id)MAToolbar:(id)toolbar itemForItemIdentifier:(id)itemIdentifier willBeInsertedIntoToolbar:(BOOL)willBeInsertedIntoToolbar {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return [self MAToolbar:toolbar itemForItemIdentifier:itemIdentifier willBeInsertedIntoToolbar:willBeInsertedIntoToolbar];
-    }
 	if(![itemIdentifier isEqualToString:@"toggleSecurityMethod:"]) {
 		return [self MAToolbar:toolbar itemForItemIdentifier:itemIdentifier willBeInsertedIntoToolbar:willBeInsertedIntoToolbar];
 	}
@@ -99,10 +93,6 @@ extern const NSString *kFullScreenWindowControllerCloseModalWindowNotYet;
 #pragma mark Allow restoration of Compose Window on send failures
 
 - (void)MAComposeViewControllerDidSend:(id __unused)composeViewController {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MAComposeViewControllerDidSend:composeViewController];
-        return;
-    }
     // Bug #998: Canceling a pinentry request might result in losing a message
     //
     // Fixes also: #814, #716, #867

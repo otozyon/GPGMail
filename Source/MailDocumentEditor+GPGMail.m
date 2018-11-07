@@ -63,9 +63,6 @@ NSString * const kComposeViewControllerPreventAutoSave = @"ComposeViewController
 }
 
 - (void)configureSecurityMethodAccessoryViewForNormalMode {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return;
-    }
 	GMSecurityMethodAccessoryView *accessoryView = [self securityMethodAccessoryView]; //[self getIvar:@"SecurityMethodHintAccessoryView"];
     [accessoryView configureForWindow:[self valueForKey:@"_window"]];
 }
@@ -101,10 +98,6 @@ NSString * const kComposeViewControllerPreventAutoSave = @"ComposeViewController
 }
 
 - (void)MABackEndDidLoadInitialContent:(id)content {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MABackEndDidLoadInitialContent:content];
-        return;
-    }
 	if(![GPGMailBundle isElCapitan]) {
 		[(NSNotificationCenter *)[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didExitFullScreen:) name:@"NSWindowDidExitFullScreenNotification" object:nil];
 	}
@@ -123,9 +116,6 @@ NSString * const kComposeViewControllerPreventAutoSave = @"ComposeViewController
 	// On El Capitan there's no more space on top of the title bar, so
 	// the security method accessory view is inserted as toolbar item in
 	// -[ComposeViewController toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:]
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return;
-    }
     GMSecurityMethodAccessoryView *accessoryView = nil;
 	accessoryView = [self securityMethodAccessoryView];
 	accessoryView.delegate = self;
@@ -287,10 +277,6 @@ NSString * const kComposeViewControllerPreventAutoSave = @"ComposeViewController
 }
 
 - (void)MABackEnd:(id)backEnd didCancelMessageDeliveryForEncryptionError:(NSError *)error {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MABackEnd:backEnd didCancelMessageDeliveryForEncryptionError:error];
-        return;
-    }
 	if([self backEnd:backEnd handleDeliveryError:error])
 		[self MABackEnd:backEnd didCancelMessageDeliveryForEncryptionError:error];
     else {
@@ -299,10 +285,6 @@ NSString * const kComposeViewControllerPreventAutoSave = @"ComposeViewController
 }
 
 - (void)MABackEnd:(id)backEnd didCancelMessageDeliveryForError:(NSError *)error {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MABackEnd:backEnd didCancelMessageDeliveryForError:error];
-        return;
-    }
 	if([self backEnd:backEnd handleDeliveryError:error])
 		[self MABackEnd:backEnd didCancelMessageDeliveryForEncryptionError:error];
     else {

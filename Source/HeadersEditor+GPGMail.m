@@ -77,9 +77,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 }
 
 - (void)GMSetup {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return;
-    }
     if([self getIvar:@"HeadersEditorIsSetup"]) {
         return;
     }
@@ -115,10 +112,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 }
 
 - (void)MA_updateFromControl {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MA_updateFromControl];
-        return;
-    }
     // _updateFromAndSignatureControls: was renamed to to updateFromControl on Yosemite.
     // Unfortunately updateFromControl doesn't take any arguments, which means,
     // that we have to define a new method to hook into it.
@@ -206,10 +199,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 }
 
 - (void)MAUpdateSecurityControls {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MAUpdateSecurityControls];
-        return;
-    }
 	// New Sierra way to do this.
     ComposeBackEnd *backEnd = [[mailself composeViewController] backEnd];
 
@@ -281,10 +270,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 - (void)MASecurityControlChanged:(NSControl *)securityControl {
     // 0x3e8 = 1000 = encrypt button
     // 0x7d0 = 2000 = sign button
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MASecurityControlChanged:securityControl];
-        return;
-    }
     if([securityControl tag] == 2000) {
         // Toggle the current status.
         BOOL messageIsToBeSigned = ![mailself messageIsToBeSigned];
@@ -308,10 +293,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 }
 
 - (void)MA_toggleEncryption {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MA_toggleEncryption];
-        return;
-    }
     ComposeViewController *composeViewController = [self composeViewController];
     ComposeBackEnd *backEnd = [composeViewController backEnd];
     // This is implemented in Mail as:
@@ -544,9 +525,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 }
 
 - (void)updateFromAndAddSecretKeysIfNecessary:(NSNumber *)necessary {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return;
-    }
     BOOL display = [necessary boolValue];
     NSPopUpButton *popUp = nil;
     popUp = [self fromPopup];
@@ -705,10 +683,6 @@ const NSString *kHeadersEditorFromControlParentItemKey = @"HeadersEditorFromCont
 }
 
 - (void)MAChangeFromHeader:(NSPopUpButton *)sender {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        [self MAChangeFromHeader:sender];
-        return;
-    }
     BOOL calledFromGPGMail = [[sender getIvar:@"CalledFromGPGMail"] boolValue];
     [sender setIvar:@"CalledFromGPGMail" value:@NO];
     

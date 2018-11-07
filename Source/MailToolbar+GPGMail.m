@@ -33,9 +33,6 @@
 @implementation MailToolbar_GPGMail
 
 + (id)MA_plistForToolbarWithIdentifier:(id)arg1 {
-    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
-        return [self MA_plistForToolbarWithIdentifier:arg1];
-    }
 	id ret = [self MA_plistForToolbarWithIdentifier:arg1];
 	
 	if(![arg1 isEqualToString:@"ComposeWindow"])

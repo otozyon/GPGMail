@@ -4,7 +4,7 @@ GPGMail
 GPGMail is a plugin for OS X's Mail.app, which let's you  
 send and receive secure, OpenPGP encrypted and signed messages.
 
-This is a build with the License Activation removed.
+This is a build without the License Activation.
 
 Prerequisite
 ------------
@@ -37,7 +37,7 @@ make
 #### Install
 Quit `Mail.app` and then copy `build/Release/GPGMail.mailbundle` to `/Library/Mail/Bundles/`.
 
-Start `Mail.app`, go to `Preferences > General > Manage Plugins` and choose `GPGMail.mailbundle` and then `Apply and Restart Mail`
+Start `Mail.app`, go to `Preferences > General > Manage Plugins` and choose `GPGMail.mailbundle` and then `Apply and Restart Mail`.
 
 
 System Requirements

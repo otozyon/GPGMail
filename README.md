@@ -4,42 +4,23 @@ GPGMail
 GPGMail is a plugin for OS X's Mail.app, which let's you  
 send and receive secure, OpenPGP encrypted and signed messages.
 
-Important
--------
-
-GPGMail currently doesn't support macOS Sierra (10.12). We're actively working on it.
-Follow us on [Twitter](https://twitter.com/gpgtools) for updates.
-
-Updates
--------
-
-The latest releases of GPGMail can be found on our [official website](https://gpgtools.org/).
-
-For the latest news and updates check our [Twitter](https://twitter.com/gpgtools).
-
-Visit our [support page](https://gpgtools.tenderapp.com) if you have questions or need help setting up your system and using GPGMail.
-
-Localizations are done on [Transifex](https://www.transifex.com/projects/p/GPGMail/).
+This is a build with the License Activation removed.
 
 Prerequisite
 ------------
 
-In order to use GPGMail you need to have GnuPG installed.
-You can either build your own version, use one from [homebrew](http://brew.sh) or find a packaged version for OS X at [gpgtools.org](https://gpgtools.org)
+Install the GPG Tools Package from the GPG Tools Website.
 
 Build
 -----
 
-#### Clone the repository
+#### Clone this repository
 ```bash
-git clone https://github.com/GPGTools/GPGMail.git
+git clone https://github.com/otozyon/GPGMail.git
 cd GPGMail
 ```
 
 #### Grab Dependencies
-
-In order to communicate with GnuPG we use our own Objective-C framework called [Libmacgpg](https://github.com/GPGTools/Libmacgpg).
-It's necessary to clone the Libmacgpg repository first, before building GPGMail.
 
 ```bash
 cd Dependencies
@@ -54,17 +35,13 @@ make
 ```
 
 #### Install
-Quit `Mail.app` and run this commands as root (`sudo -i`)
-```bash
-GPGMAIL=$(ls -1rd /Library/Application\ Support/GPGTools/GPGMail/* | head -1)
-rm -rf $GPGMAIL && cp -a build/Release/GPGMail.mailbundle $GPGMAIL
-```
+Quit `Mail.app` and then copy `build/Release/GPGMail.mailbundle` to `/Library/Mail/Bundles/`.
 
+Start `Mail.app`, go to `Preferences > General > Manage Plugins` and choose `GPGMail.mailbundle` and then `Apply and Restart Mail`
 
 
 System Requirements
 -------------------
 
-* Mac OS X >= 10.9 (macOS Sierra is not yet supported!)
 * Libmacgpg
 * GnuPG
